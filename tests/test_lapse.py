@@ -322,6 +322,32 @@ class ArgParseTests(unittest.TestCase):
         self.assertTrue(args.client_secret)
         self.assertEqual(args.client_secret_value, "secret")
 
+    def test_client_secret_env_flag(self):
+        args = lapse.parse_args([
+            "--client-id", "cid", "--tenant-id", "tid",
+            "--client-secret", "--client-secret-env", "LAPSE_CLIENT_SECRET",
+        ])
+        self.assertTrue(args.client_secret)
+        self.assertEqual(args.client_secret_env, "LAPSE_CLIENT_SECRET")
+
+    def test_resolve_client_secret_from_env(self):
+        args = lapse.parse_args([
+            "--client-id", "cid", "--tenant-id", "tid",
+            "--client-secret", "--client-secret-env", "LAPSE_CLIENT_SECRET",
+        ])
+        with unittest.mock.patch.dict(os.environ, {"LAPSE_CLIENT_SECRET": "secret-value"}):
+            lapse.resolve_client_secret(args)
+        self.assertEqual(args.client_secret_value, "secret-value")
+
+    def test_rejects_multiple_client_secret_sources(self):
+        args = lapse.parse_args([
+            "--client-id", "cid", "--tenant-id", "tid",
+            "--client-secret", "--client-secret-value", "inline",
+            "--client-secret-env", "LAPSE_CLIENT_SECRET",
+        ])
+        with self.assertRaises(SystemExit):
+            lapse.resolve_client_secret(args)
+
 
 if __name__ == "__main__":
     unittest.main()

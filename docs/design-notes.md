@@ -50,9 +50,9 @@ The recommended path for a new deployment is to run in report mode first, review
 Two flows are supported via MSAL:
 
 - **Device code flow** — user authenticates interactively through a browser. Appropriate for ad-hoc runs and development. Token is cached to disk.
-- **Client credentials** — app-only flow using client ID and secret. Appropriate for scheduled automation. No user interaction.
+- **Client credentials** — app-only flow using client ID and secret. Appropriate for scheduled automation. No user interaction. Prefer `--client-secret-env` so the secret does not appear in shell history or process listings.
 
-Token cache is serialized to disk between runs to avoid re-authentication. The cache path is configurable via `--token-cache`.
+Token cache is serialized to disk between runs to avoid re-authentication. The cache path is configurable via `--token-cache`. Treat the cache file as sensitive authentication material and keep it outside source control with restrictive filesystem permissions.
 
 ## What lapse Does Not Do
 

@@ -118,6 +118,18 @@ def build_msal_app(args: argparse.Namespace, cache: Any) -> Any:
     )
 
 
+def resolve_client_secret(args: argparse.Namespace) -> None:
+    """Populate the client secret from an environment variable when requested."""
+    if not getattr(args, "client_secret_env", None):
+        return
+    if args.client_secret_value:
+        _die("Use only one of --client-secret-value or --client-secret-env.")
+    secret = os.environ.get(args.client_secret_env)
+    if not secret:
+        _die(f"Environment variable {args.client_secret_env} is not set or empty.")
+    args.client_secret_value = secret
+
+
 def get_access_token(app: Any, args: argparse.Namespace) -> str:
     """Acquire an access token, using the cache when possible.
 
@@ -584,6 +596,10 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
         help="Client secret value (for --client-secret flow).",
     )
     auth.add_argument(
+        "--client-secret-env", metavar="VAR",
+        help="Read the client secret from environment variable VAR.",
+    )
+    auth.add_argument(
         "--token-cache", metavar="FILE", default="token_cache.bin",
         help="Path to token cache file (default: token_cache.bin).",
     )
@@ -604,8 +620,9 @@ def main(argv: Optional[List[str]] = None) -> int:
     if requests is None:
         _die("requests is not installed. Run: pip install requests")
 
+    resolve_client_secret(args)
     if args.client_secret and not all([args.client_id, args.tenant_id, args.client_secret_value]):
-        _die("--client-secret requires --client-id, --tenant-id, and --client-secret-value.")
+        _die("--client-secret requires --client-id, --tenant-id, and --client-secret-value or --client-secret-env.")
     if not args.client_secret and not args.client_id:
         _die("Provide --client-id and --tenant-id (and optionally --tenant-id for authority).")
 

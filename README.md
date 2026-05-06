@@ -60,7 +60,15 @@ lp --client-id <id> --tenant-id <tenant> --disable
 lp --client-id <id> --tenant-id <tenant> --delete
 
 # App-only for scheduled automation
-lp --client-secret --client-id <id> --tenant-id <tenant> --client-secret-value <secret> --disable
+export LAPSE_CLIENT_SECRET="<secret>"
+lp --client-secret --client-id <id> --tenant-id <tenant> --client-secret-env LAPSE_CLIENT_SECRET --disable
+```
+
+PowerShell equivalent:
+
+```powershell
+$env:LAPSE_CLIENT_SECRET = "<secret>"
+lp --client-secret --client-id <id> --tenant-id <tenant> --client-secret-env LAPSE_CLIENT_SECRET --disable
 ```
 
 ## Short Flags
@@ -73,6 +81,14 @@ lp --client-secret --client-id <id> --tenant-id <tenant> --client-secret-value <
 | `-n` | `--dry-run` | Report without making changes |
 | `-f` | `--force` | Skip confirmation prompt on `--delete` |
 | `-w N` | `--workers N` | Parallel threads for sign-in checks |
+
+## Secret Handling
+
+Prefer `--client-secret-env` over `--client-secret-value` for scheduled runs so
+the secret is not left in shell history or exposed in process listings. The
+token cache may contain reusable authentication material; keep
+`token_cache.bin` out of source control, store it in a restricted directory, and
+delete or revoke it if it is exposed.
 
 ## Deployment Stages
 
