@@ -1,0 +1,64 @@
+name: Bug Report
+description: Report a problem with lapse.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please include enough detail to reproduce the issue. Remove any tenant IDs, device IDs, or credentials before submitting.
+
+  - type: input
+    id: version
+    attributes:
+      label: lapse version
+      placeholder: "0.1.0"
+    validations:
+      required: true
+
+  - type: input
+    id: python
+    attributes:
+      label: Python version
+      placeholder: "3.11"
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: "Windows 11, Ubuntu 22.04"
+    validations:
+      required: true
+
+  - type: input
+    id: auth
+    attributes:
+      label: Authentication method
+      placeholder: "device code flow / client credentials"
+    validations:
+      required: true
+
+  - type: textarea
+    id: command
+    attributes:
+      label: Command used
+      description: Paste the lapse command you ran (redact any sensitive values).
+      placeholder: "lapse --days 90 --company-only --dry-run ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include the full error output if applicable.
+    validations:
+      required: true

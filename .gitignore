@@ -1,0 +1,32 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+*.whl
+
+# token cache written at runtime
+token_cache.bin
+
+# output files
+results.json
+results.csv
+*.json
+*.csv
+
+# virtual environments
+.venv/
+venv/
+env/
+
+# editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
