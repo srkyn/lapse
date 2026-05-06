@@ -44,23 +44,35 @@ For read-only audits, `Device.Read.All` is sufficient.
 
 ```bash
 # Report only — no changes
+lp --client-id <id> --tenant-id <tenant> -d 90 -n
 lapse --client-id <id> --tenant-id <tenant> --days 90 --dry-run
 
 # Filter to company-owned devices, skip VDI noise
-lapse --client-id <id> --tenant-id <tenant> --company-only --skip-vdi
+lp --client-id <id> --tenant-id <tenant> --company-only --skip-vdi
 
 # Write reports
-lapse --client-id <id> --tenant-id <tenant> --output results.json --output-csv results.csv
+lp --client-id <id> --tenant-id <tenant> -o results.json --output-csv results.csv
 
 # Disable stale devices (reversible)
-lapse --client-id <id> --tenant-id <tenant> --disable
+lp --client-id <id> --tenant-id <tenant> --disable
 
-# Delete stale devices
-lapse --client-id <id> --tenant-id <tenant> --delete
+# Delete stale devices (confirm first with --dry-run)
+lp --client-id <id> --tenant-id <tenant> --delete
 
 # App-only for scheduled automation
-lapse --client-secret --client-id <id> --tenant-id <tenant> --client-secret-value <secret> --disable
+lp --client-secret --client-id <id> --tenant-id <tenant> --client-secret-value <secret> --disable
 ```
+
+## Short Flags
+
+| Short | Long | Description |
+|---|---|---|
+| `-d N` | `--days N` | Inactivity threshold in days |
+| `-o FILE` | `--output FILE` | Write JSON report to FILE |
+| `-q` | `--quiet` | Summary line only, no table |
+| `-n` | `--dry-run` | Report without making changes |
+| `-f` | `--force` | Skip confirmation prompt on `--delete` |
+| `-w N` | `--workers N` | Parallel threads for sign-in checks |
 
 ## Deployment Stages
 
@@ -79,7 +91,7 @@ Running `--delete` on day one is how cleanup tools create support tickets. The r
 git clone https://github.com/srkyn/lapse.git
 cd lapse
 pip install .
-lapse --version
+lp --version
 ```
 
 Or run directly:
@@ -108,5 +120,5 @@ python lapse.py --client-id <id> --tenant-id <tenant> --dry-run
 ```bash
 python -m py_compile lapse.py
 python -m unittest discover -s tests -v
-lapse --version
+lp --version
 ```
