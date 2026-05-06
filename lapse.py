@@ -514,7 +514,7 @@ def apply_action(
 
 def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        prog="lapse",
+        prog="lp",
         description=(
             "Identify stale Entra ID device objects using dual-signal detection.\n"
             "Combines approximateLastSignInDateTime with interactive sign-in log "
@@ -526,7 +526,7 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
 
     detection = parser.add_argument_group("detection")
     detection.add_argument(
-        "--days", type=int, default=DEFAULT_DAYS, metavar="N",
+        "-d", "--days", type=int, default=DEFAULT_DAYS, metavar="N",
         help=f"Inactivity threshold in days (default: {DEFAULT_DAYS}).",
     )
     detection.add_argument(
@@ -538,21 +538,21 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
         help="Exclude devices with VDI or NonPersistent markers in their name or enrollment profile.",
     )
     detection.add_argument(
-        "--workers", type=int, default=DEFAULT_WORKERS, metavar="N",
+        "-w", "--workers", type=int, default=DEFAULT_WORKERS, metavar="N",
         help=f"Parallel threads for sign-in log checks (default: {DEFAULT_WORKERS}).",
     )
 
     output = parser.add_argument_group("output")
-    output.add_argument("--output", metavar="FILE", help="Write JSON report to FILE.")
+    output.add_argument("-o", "--output", metavar="FILE", help="Write JSON report to FILE.")
     output.add_argument("--output-csv", metavar="FILE", help="Write CSV report to FILE.")
     output.add_argument(
-        "--quiet", action="store_true",
+        "-q", "--quiet", action="store_true",
         help="Suppress table output; print summary line only.",
     )
 
     actions = parser.add_argument_group("actions")
     actions.add_argument(
-        "--dry-run", action="store_true",
+        "-n", "--dry-run", action="store_true",
         help="Report candidates without making any changes.",
     )
     actions.add_argument(
@@ -564,7 +564,7 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
         help="Permanently delete stale devices from Entra ID.",
     )
     actions.add_argument(
-        "--force", action="store_true",
+        "-f", "--force", action="store_true",
         help="Skip confirmation prompt when using --delete.",
     )
 
