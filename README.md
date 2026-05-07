@@ -28,6 +28,19 @@ lapse adds a second signal. For every candidate that fails the timestamp filter,
 - `Retry-After` backoff on HTTP 429.
 - Token cache persisted between runs; supports device code flow and client credentials.
 
+## Decision Flow
+
+```mermaid
+flowchart LR
+    Devices["Graph devices<br/>approximateLastSignInDateTime older than threshold"] --> Candidates["Initial stale candidates"]
+    Candidates --> JoinFilter["Scope filters<br/>exclude hybrid-joined, personal BYOD, VDI noise"]
+    JoinFilter --> SignIns["Interactive sign-in check<br/>auditLogs/signIns, interactiveUser only"]
+    SignIns --> Report["Report<br/>JSON, CSV, terminal summary"]
+    Report --> Action["Controlled action<br/>dry-run, disable, or confirmed delete"]
+```
+
+The second signal is the point of the tool: a device is not treated as truly stale just because background activity made one timestamp confusing.
+
 ## Required Permissions
 
 Register an application in Entra ID and grant:
