@@ -13,6 +13,12 @@ lapse adds a second signal. For every candidate that fails the timestamp filter,
 ![Python](https://img.shields.io/badge/python-3.8%2B-1f6feb?style=flat-square)
 ![License](https://img.shields.io/github/license/srkyn/lapse?style=flat-square)
 
+## Demo
+
+![Sanitized lapse terminal output](docs/assets/lapse-sample-output.svg)
+
+More context is available in [docs/demo.md](docs/demo.md).
+
 ## What It Does
 
 - Queries Graph API with a server-side `$filter` on `approximateLastSignInDateTime` to pull initial candidates.
@@ -133,6 +139,7 @@ python lapse.py --client-id <id> --tenant-id <tenant> --dry-run
 ## Files
 
 - `lapse.py`: the scanner
+- `docs/demo.md`: sanitized example output and interpretation
 - `tests/test_lapse.py`: unit tests (37 cases)
 - `docs/design-notes.md`: detection approach, design decisions, and limitations
 - `CHANGELOG.md`: release history

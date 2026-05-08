@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="430" viewBox="0 0 1180 430" role="img" aria-labelledby="title desc">
+  <title id="title">Sanitized lapse terminal output</title>
+  <desc id="desc">Example lapse output showing stale Entra ID device review.</desc>
+  <rect width="1180" height="430" rx="10" fill="#0f1720"/>
+  <rect x="0" y="0" width="1180" height="34" rx="10" fill="#182331"/>
+  <circle cx="22" cy="17" r="6" fill="#e06c75"/>
+  <circle cx="44" cy="17" r="6" fill="#e5c07b"/>
+  <circle cx="66" cy="17" r="6" fill="#98c379"/>
+  <text x="92" y="22" font-family="Consolas, monospace" font-size="13" fill="#b7c0cc">lp --days 120 --company-only --skip-vdi --dry-run</text>
+
+  <g font-family="Consolas, monospace" font-size="15" fill="#d6deeb">
+    <text x="28" y="66">Authenticating...</text>
+    <text x="28" y="96">Scanning Entra ID devices (threshold: 120 days)...</text>
+    <text x="28" y="126">  Retrieved 842 device(s) from Graph API.</text>
+    <text x="28" y="156">  Excluded 113 hybrid-joined device(s).</text>
+    <text x="28" y="186">  Excluded 47 personal device(s) (--company-only).</text>
+    <text x="28" y="216">  Excluded 58 VDI device(s) (--skip-vdi).</text>
+    <text x="28" y="246">  19 candidate(s) after filtering.</text>
+    <text x="28" y="276">  Checking sign-in logs (8 parallel workers)... done</text>
+    <text x="28" y="316">Name              OS       Approx Last Sign-In  Interactive Sign-In  Age  Action</text>
+    <text x="28" y="338">----------------  -------  -------------------  -------------------  ---  --------</text>
+    <text x="28" y="366" fill="#f8d49b">WIN-LAB-042       Windows  2025-09-18           none in window       232  review</text>
+    <text x="28" y="394" fill="#f8d49b">MDM-IPAD-17       iOS      2025-08-22           none in window       259  review</text>
+  </g>
+</svg>
