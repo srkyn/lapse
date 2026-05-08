@@ -291,7 +291,7 @@ def check_interactive_signins(
             return False
         resp.raise_for_status()
         return len(resp.json().get("value", [])) > 0
-    except Exception:
+    except (requests.RequestException, ValueError, KeyError):
         return False
 
 

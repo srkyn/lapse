@@ -2,7 +2,7 @@
 
 # lapse
 
-Entra ID accumulates device objects silently. VDI pools register a new object every session. Offboarded employees leave phones and laptops in the directory for months. Eventually a user hits the device registration quota and gets locked out of Office 365 from a brand-new laptop — and nobody can explain why.
+Entra ID accumulates device objects silently. VDI pools register a new object every session. Offboarded employees leave phones and laptops in the directory for months. Eventually a user hits the device registration quota and gets blocked from Office 365 on a new laptop, but the directory evidence is hard to interpret.
 
 The standard cleanup approach filters on `approximateLastSignInDateTime`. The problem is that property also updates on background sync traffic, Windows Update heartbeats, and MDM check-ins. A device untouched by a human for 18 months can still appear active. Naive filters produce hundreds of false positives and erode trust in the whole process.
 
@@ -39,7 +39,7 @@ flowchart LR
     Report --> Action["Controlled action<br/>dry-run, disable, or confirmed delete"]
 ```
 
-The second signal is the point of the tool: a device is not treated as truly stale just because background activity made one timestamp confusing.
+The second signal is the point of the tool: a device is not treated as truly stale solely because background activity made one timestamp confusing.
 
 ## Required Permissions
 
