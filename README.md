@@ -118,7 +118,7 @@ Running `--delete` on day one is how cleanup tools create support tickets. The r
 | Audit | `--dry-run` | Review for a week. Look for false positives. |
 | Review | `--output-csv` | Human approves before any action. |
 | Disable | `--disable` | Run two weeks. Confirm nothing legitimate is affected. |
-| Purge | `--delete` | Schedule as weekly automation. |
+| Purge | `--delete` | Use only after repeated review, approval, and confirmed disable history. |
 
 ## Installation
 

@@ -43,7 +43,7 @@ lapse follows a staged model to avoid irreversible mistakes:
 | `--disable` | Sets `accountEnabled = false`. Reversible. Device still exists. |
 | `--delete` | Permanently removes the device. Requires confirmation unless `--force`. |
 
-The recommended path for a new deployment is to run in report mode first, review the CSV, then run `--disable` for a week before enabling `--delete`.
+The recommended path for a new deployment is to run in report mode first, review the CSV, then use `--disable` with a clear rollback window before considering any permanent delete workflow.
 
 ## Authentication
 
