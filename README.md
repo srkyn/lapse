@@ -2,11 +2,11 @@
 
 # lapse
 
-Entra ID accumulates device objects silently. VDI pools register a new object every session. Offboarded employees leave phones and laptops in the directory for months. Eventually a user hits the device registration quota and gets blocked from Office 365 on a new laptop, but the directory evidence is hard to interpret.
+Entra ID device cleanup sounds simple until the evidence starts arguing with itself. VDI pools register new objects every session. Offboarded users leave phones and laptops behind in the directory. Eventually someone hits a device registration quota and gets blocked from Office 365 on a new laptop, but the cleanup list is full of maybes.
 
 The standard cleanup approach filters on `approximateLastSignInDateTime`. The problem is that property also updates on background sync traffic, Windows Update heartbeats, and MDM check-ins. A device untouched by a human for 18 months can still appear active. Naive filters produce hundreds of false positives and erode trust in the whole process.
 
-lapse adds a second signal. For every candidate that fails the timestamp filter, it checks `auditLogs/signIns` for actual interactive user authentication within the same window. Background sync doesn't count. A device is only marked truly stale when both signals agree.
+lapse adds a second signal. For every candidate that fails the timestamp filter, it checks `auditLogs/signIns` for actual interactive user authentication in the same window. Background sync does not count. A device is only marked truly stale when both signals agree.
 
 ![Release](https://img.shields.io/github/v/release/srkyn/lapse?style=flat-square)
 ![CI](https://img.shields.io/github/actions/workflow/status/srkyn/lapse/ci.yml?branch=main&style=flat-square)
