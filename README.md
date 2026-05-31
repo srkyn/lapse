@@ -146,6 +146,12 @@ python lapse.py --client-id <id> --tenant-id <tenant> --dry-run
 - `docs/design-notes.md`: detection approach, design decisions, and limitations
 - `CHANGELOG.md`: release history
 
+## See Also: relic
+
+[relic](https://github.com/srkyn/relic) solves the same class of problem for on-premises Active Directory via LDAP. lapse targets Entra ID cloud devices via Microsoft Graph. Between them they cover identity hygiene across hybrid AD/Entra environments.
+
+If your organization runs both on-premises AD and Entra ID, run relic against the domain controller and lapse against the cloud tenant to get a complete picture of stale identity objects across both directories.
+
 ## Limitations
 
 - Sign-in log retention depends on Entra ID license tier; short retention windows reduce secondary verification accuracy.
