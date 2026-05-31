@@ -17,6 +17,8 @@ lapse adds a second signal. For every candidate that fails the timestamp filter,
 
 ![Sanitized lapse terminal output](docs/assets/lapse-sample-output.svg)
 
+In a synthetic 90-device test scenario, lapse identified 34 initial stale candidates from the timestamp filter. Secondary sign-in log verification confirmed 11 as false positives — devices with background sync or MDM heartbeat traffic keeping the timestamp current despite no real user activity. The confirmed stale set was 23 devices. Without the second signal, a naive filter would have flagged 34 and generated cleanup tickets that erode trust in the process.
+
 More context is available in [docs/demo.md](docs/demo.md).
 
 ## What It Does
