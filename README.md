@@ -17,18 +17,18 @@ lapse adds a second signal. For every candidate that fails the timestamp filter,
 
 ![Sanitized lapse terminal output](docs/assets/lapse-sample-output.svg)
 
-In a synthetic 90-device test scenario, lapse identified 34 initial stale candidates from the timestamp filter. Secondary sign-in log verification confirmed 11 as false positives — devices with background sync or MDM heartbeat traffic keeping the timestamp current despite no real user activity. The confirmed stale set was 23 devices. Without the second signal, a naive filter would have flagged 34 and generated cleanup tickets that erode trust in the process.
+In a synthetic 90-device test scenario, lapse identified 34 initial stale candidates from the timestamp filter. Secondary sign-in log verification confirmed 11 as false positives - devices with background sync or MDM heartbeat traffic keeping the timestamp current despite no real user activity. The confirmed stale set was 23 devices. Without the second signal, a naive filter would have flagged 34 and generated cleanup tickets that erode trust in the process.
 
 More context is available in [docs/demo.md](docs/demo.md).
 
 ## What It Does
 
 - Queries Graph API with a server-side `$filter` on `approximateLastSignInDateTime` to pull initial candidates.
-- Cross-checks each candidate against `auditLogs/signIns` filtered to `interactiveUser` events — the secondary verification that eliminates false positives.
+- Cross-checks each candidate against `auditLogs/signIns` filtered to `interactiveUser` events - the secondary verification that eliminates false positives.
 - Excludes hybrid-joined (domain-joined) devices by default.
 - `--company-only` excludes personal BYOD devices.
 - `--skip-vdi` excludes non-persistent VDI registrations by name and enrollment profile.
-- `--disable` sets `accountEnabled = false` — reversible, no deletion.
+- `--disable` sets `accountEnabled = false` - reversible, no deletion.
 - `--delete` permanently removes stale devices, with a confirmation prompt unless `--force`.
 - `--dry-run` produces a full report with no changes made.
 - JSON and CSV output for review workflows and audit records.
@@ -64,7 +64,7 @@ For read-only audits, `Device.Read.All` is sufficient.
 ## Usage
 
 ```bash
-# Report only — no changes
+# Report only - no changes
 lp --client-id <id> --tenant-id <tenant> -d 90 -n
 lapse --client-id <id> --tenant-id <tenant> --days 90 --dry-run
 
@@ -146,11 +146,16 @@ python lapse.py --client-id <id> --tenant-id <tenant> --dry-run
 - `docs/design-notes.md`: detection approach, design decisions, and limitations
 - `CHANGELOG.md`: release history
 
-## See Also: relic
+## See Also
 
-[relic](https://github.com/srkyn/relic) solves the same class of problem for on-premises Active Directory via LDAP. lapse targets Entra ID cloud devices via Microsoft Graph. Between them they cover identity hygiene across hybrid AD/Entra environments.
+[relic](https://github.com/srkyn/relic) covers the same class of problem for
+on-premises Active Directory via LDAP. lapse targets Entra ID cloud devices via
+Microsoft Graph. Together they cover identity hygiene across hybrid AD and Entra
+environments.
 
-If your organization runs both on-premises AD and Entra ID, run relic against the domain controller and lapse against the cloud tenant to get a complete picture of stale identity objects across both directories.
+If your organization runs both on-premises AD and Entra ID, run relic against
+the domain controller and lapse against the cloud tenant to get a complete picture
+of stale identity objects across both directories.
 
 ## Limitations
 
