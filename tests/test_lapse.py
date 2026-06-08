@@ -242,6 +242,20 @@ class JsonOutputTests(unittest.TestCase):
             os.unlink(path)
 
 
+class TokenCacheTests(unittest.TestCase):
+    def test_save_token_cache_creates_parent_directory(self):
+        cache = MagicMock()
+        cache.has_state_changed = True
+        cache.serialize.return_value = "cache-data"
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = os.path.join(temp_dir, "nested", "token_cache.bin")
+            lapse._save_token_cache(cache, path)
+
+            with open(path, encoding="utf-8") as fh:
+                self.assertEqual(fh.read(), "cache-data")
+
+
 class CsvOutputTests(unittest.TestCase):
     def test_write_csv_columns(self):
         devices = [

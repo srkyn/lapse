@@ -88,8 +88,15 @@ def _load_token_cache(path: str) -> "msal.SerializableTokenCache":
 def _save_token_cache(cache: "msal.SerializableTokenCache", path: str) -> None:
     """Persist a modified MSAL token cache to disk."""
     if cache.has_state_changed:
+        directory = os.path.dirname(os.path.abspath(path))
+        if directory:
+            os.makedirs(directory, exist_ok=True)
         with open(path, "w", encoding="utf-8") as fh:
             fh.write(cache.serialize())
+        try:
+            os.chmod(path, 0o600)
+        except OSError:
+            pass
 
 
 # ---------------------------------------------------------------------------
